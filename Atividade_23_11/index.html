@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade Avaliativa 23/11</title>
+</head>
+<body>
+    <header>
+        <h1>Calendário de Vacina do COVID</h1>
+    </header>
+    <div>
+        <label for="nome">Infome seu nome:</label>
+        <input type="text" name="nome" id="nome"><br>
+
+        <label for="dt_nascimneto">Informe sua data de nascimento:</label>
+        <input type="date" name="dt_nascimneto" id="dt_nascimento"><br>
+
+        <button type="submit" onclick="mostrarDataVacina()">Calcular</button>
+    </div>
+
+    <div id="escreva"></div>
+
+    <script>
+        function escreve(frase){
+            document.getElementById("escreva").innerHTML = frase;
+        }
+
+        function calculoIdade(dia,mes,ano){
+            var data = new Date();
+            var anoAtual = data.getFullYear();
+            var mesAtual = (data.getMonth())+1;
+            var diaAtual = data.getDate();
+            var idade = (anoAtual-ano);
+            
+            if(mesAtual < mes){
+                console.log("idade da pessoa é:"+(idade-1));    
+                return idade-1;
+            }else if(mesAtual == mes){
+                if(diaAtual < dia){
+                    console.log("idade da pessoa é:"+(idade-1));    
+                    return idade-1;
+                }else{
+                    console.log("idade da pessoa é:"+idade);
+                    return idade;
+                }
+            }else{
+                console.log("idade da pessoa é:"+idade);
+                return idade;
+            }
+        }
+
+        function mostrarDataVacina() {
+            var nome = document.getElementById("nome").value;
+            var dt_nascimento = document.getElementById("dt_nascimento").value;
+            
+            var dia = Number(dt_nascimento.slice(8,10));
+            var mes = Number(dt_nascimento.slice(5,7));
+            var ano = Number(dt_nascimento.slice(0,4));
+
+            var idade = calculoIdade(dia, mes, ano);
+            var mesDaVacina = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+            for(var contini = 1, contfim = 11, indice = 0;indice <= 12; contini += 10, contfim +=10, indice++){
+                if(idade < 1){
+                escreve(nome +" está liberado da vacinação!");
+                }else if(idade >= contini && idade < contfim){
+                    escreve(nome +", sua vacina será a partir de "+mesDaVacina[indice]);
+                }else if(idade > 100){
+                    escreve(nome +", sua vacinação será na sua casa!");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
